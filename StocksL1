@@ -1,0 +1,803 @@
+import pandas as pd
+import pyodbc as odbc
+from pathlib import Path
+import numpy as np 
+import os
+import seaborn as sns
+from matplotlib import pyplot as plt
+import xlwings as xw
+from openpyxl import load_workbook 
+import glob
+import re
+from termcolor import colored,cprint
+from tabulate import tabulate
+import warnings
+warnings.simplefilter(action='ignore',category=FutureWarning)
+tc=0
+conn=odbc.connect('Driver={SQL Server};'
+                    'Server=172.16.1.221;'
+                    'Database=FlatFile_Connect;'
+                    'Trusted_Connection=no;'
+                    'UID=abcd;'
+                    'PWD=+++++;')
+
+df = pd.DataFrame(np.random.random(200).reshape(2, 100))
+table_list=[]
+arg1=''
+bra1=''
+mex1=''
+ch1=''
+cn1=''
+erf1=''
+fop1 =''
+fra1 =''
+ham1 =''
+kas1 =''
+rit1 =''
+rom1  =''
+rus1 =''
+sas1=''
+sho1 =''
+sys1 =''
+itn1 =''
+itg1 =''
+path = (r"C:\Users\VenkateshK\All4Labels\Analytics & Big Data (BING) - Documents\ERP-DB\Data Sources\Cleansed files CUPRA Phase 2\07 2022\Stock")
+extension = 'xlsx'
+extension1='csv'
+extension2='xlsb'
+extension3='xls'
+os.chdir(path)
+files = [i for i in glob.glob('*.{}'.format(extension))]
+files1 = [i for i in glob.glob('*.{}'.format(extension1))]
+files2 = [i for i in glob.glob('*.{}'.format(extension2))]
+files3 = [i for i in glob.glob('*.{}'.format(extension3))]
+arg= ['LATAM','ARG','arg','latam','Argentina','A4LARG','A4L ARG','ARGENTINA']
+bra= ['LATAM','BRA','bra','latam','Brazil','A4LBRA','A4L BRA','BRAZIL']
+mex= ['LATAM','MEX','mex','latam','Mexico','A4LMEX','A4L MEX','MEXICO']
+cn= ['China','CNG','CNH','CN','Guangzhou','Hangzhou','HZ','CHN', 'A4LCN','A4L CN','A4LCNG','A4LCNH','A4L CNG','A4L CNH','CHINA']
+ch= ['CH','Schweiz','A4LCH','A4L CH','Switzerland','SWITZERLAND']
+erf= ['ERF','EF','Erfurt','Forderungen','A4LERF','A4L ERF','A4LEF','A4L EF','ERFURT']
+fop= ['FOLIEN','FolienPrint','folienprint','folienPrint','Folienprint','FOP','FP','A4LFOP','A4L FOP','A4L FP','A4LFP']
+fra= ['A4LFR','FRA','France','A4LFRA','A4L FRA','A4L FR','FRANCE']
+hams= ['HH','HAM','Witz','A4LHH','A4L HH','A4LHAM','A4L HAM','Hamburg','HAMBURG']
+itn= ['A4LIT ','NUC','ITN','A4L IT','A4L ITN','A4LITN']
+itg= ['Italy','SPA','GPS','ITG','A4LITG','A4L ITG','ITALY']
+kas= ['KS','KAS','Lagerbestandsabzug','A4LKAS','A4L KAS','A4LKS','A4L KS','Kassel','KASSEL']
+rit= ['Ritter','RI','RIT','vwRitKundeUmsatzRechnung','A4LRIT','A4L RIT','A4LRI','A4L RI','RITTER']
+rom= ['Romania ','RO','ROM','A4LRO','A4L RO','A4LROM','A4L ROM','ROMANIA','Romänien']
+rus= ['RUS','RU','A4LRUS','A4L RUS','A4LRU','A4L RU','Russia','RUSSIA']
+sas= ['S&S','S\+S','SAS','SaS','A4LSaS','A4L SaS','A4LSAS','A4L SAS','Smart&Secure']
+sho= ['Shop','SH','SHO','A4LSH','A4L SH','A4LSHO','A4L SHO','SHOP']
+sys= ['SYS','SY','A4LSYS','A4L SYS','A4LSY','A4L SY','Systems','SYSTEMS']
+
+for i in files:
+        for j in arg:
+            if re.search(j,i):
+                arg1=i
+
+for i in files1:
+    for j in bra:
+        if re.search(j,i):
+            arg1=i  
+for i in files2:
+    for j in arg:
+        if re.search(j,i):
+            arg1=i
+for i in files3:
+    for j in arg:
+        if re.search(j,i):
+            arg1=i
+
+for i in files:
+        for j in bra:
+            if re.search(j,i):
+                bra1=i       
+for i in files1:
+    for j in bra:
+        if re.search(j,i):
+            bra1=i
+            
+for i in files2:
+    for j in bra:
+        if re.search(j,i):                   
+            bra1=i
+for i in files3:
+    for j in bra:
+        if re.search(j,i):
+            if re.search(j,i):
+                bra1=i
+
+for i in files:
+    for j in mex:
+        if re.search(j,i):
+            if re.search(j,i):
+                mex1=i
+
+for i in files1:
+    for j in mex:
+        if re.search(j,i):
+            if re.search(j,i):
+                mex1=i
+for i in files2:
+    for j in mex:
+        if re.search(j,i):
+            if re.search(j,i):
+                mex1=i
+for i in files3:
+    for j in mex:
+        if re.search(j,i):
+            if re.search(j,i):
+                mex1=i
+
+for i in files:
+    for j in cn:
+        if re.search(j,i):
+            cn1=i
+       
+
+for i in files1:
+    for j in cn:
+        if re.search(j,i):
+            cn1=i  
+for i in files2:
+    for j in cn:
+        if re.search(j,i):
+            cn1=i
+for i in files3:
+    for j in cn:
+        if re.search(j,i):
+            cn1=i
+
+for i in files:
+    for j in ch:
+        if re.search(j,i):
+            ch1=i
+
+for i in files1:
+    for j in ch:
+        if re.search(j,i):
+            ch1=i 
+for i in files2:
+    for j in ch:
+        if re.search(j,i):
+            ch1=i
+for i in files3:
+    for j in ch:
+        if re.search(j,i):
+            ch1=i
+
+for i in files:
+    for j in erf:
+        if re.search(j,i):
+            erf1=i
+
+for i in files1:
+    for j in erf:
+        if re.search(j,i):
+            erf1=i  
+for i in files2:
+    for j in erf:
+        if re.search(j,i):
+            erf1=i
+for i in files3:
+    for j in erf:
+        if re.search(j,i):
+            erf1=i
+
+for i in files:
+    for j in fop:
+        if re.search(j,i):
+            fop1=i
+
+for i in files1:
+    for j in fop:
+        if re.search(j,i):
+            fop1=i 
+for i in files2:
+    for j in fop:
+        if re.search(j,i):
+            fop1=i
+for i in files3:
+    for j in fop:
+        if re.search(j,i):
+            fop1=i
+
+for i in files:
+    for j in fra:
+        if re.search(j,i):
+            fra1=i
+
+for i in files1:
+    for j in fra:
+        if re.search(j,i):
+            fra1=i 
+for i in files2:
+    for j in fra:
+        if re.search(j,i):
+            fra1=i
+for i in files3:
+    for j in fra:
+        if re.search(j,i):
+            fra1=i
+
+for i in files:
+    for j in hams:
+        if re.search(j,i):
+            ham1=i
+
+for i in files1:
+    for j in hams:
+        if re.search(j,i):
+            ham1=i 
+for i in files2:
+    for j in hams:
+        if re.search(j,i):
+            ham1=i
+for i in files3:
+    for j in hams:
+        if re.search(j,i):
+            ham1=i
+
+for i in files:
+    for j in itg:
+        if re.search(j,i):
+            itg1=i
+
+for i in files1:
+    for j in itg:
+        if re.search(j,i):
+            itg1=i 
+for i in files2:
+    for j in itg:
+        if re.search(j,i):
+            itg1=i
+for i in files3:
+    for j in itg:
+        if re.search(j,i):
+            itg1=i
+
+for i in files:
+    for j in itn:
+        if re.search(j,i):
+            itn1=i
+
+for i in files1:
+    for j in itn:
+        if re.search(j,i):
+            itn1=i 
+for i in files2:
+    for j in itn:
+        if re.search(j,i):
+            itn1=i 
+for i in files3:
+    for j in itn:
+        if re.search(j,i):
+            itn1=i 
+for i in files:
+    for j in kas:
+        if re.search(j,i):
+            kas1=i
+
+for i in files1:
+    for j in kas:
+        if re.search(j,i):
+            kas1=i 
+for i in files2:
+    for j in kas:
+        if re.search(j,i):
+            kas1=i
+for i in files3:
+    for j in kas:
+        if re.search(j,i):
+            kas1=i
+for i in files:
+    for j in rit:
+        if re.search(j,i):
+            rit1=i
+
+for i in files1:
+    for j in rit:
+        if re.search(j,i):
+            rit1=i  
+for i in files2:
+    for j in rit:
+        if re.search(j,i):
+            rit1=i
+for i in files3:
+    for j in rit:
+        if re.search(j,i):
+            rit1=i
+for i in files:
+    for j in rom:
+        if re.search(j,i):
+            rom1=i
+
+for i in files1:
+    for j in rom:
+        if re.search(j,i):
+            rom1=i  
+for i in files2:
+    for j in rom:
+        if re.search(j,i):
+            rom1=i
+for i in files3:
+    for j in rom:
+        if re.search(j,i):
+            rom1=i
+for i in files:
+    for j in rus:
+        if re.search(j,i):
+            rus1=i
+
+for i in files1:
+    for j in rus:
+        if re.search(j,i):
+            rus1=i 
+for i in files2:
+    for j in rus:
+        if re.search(j,i):
+            rus1=i
+for i in files3:
+    for j in rus:
+        if re.search(j,i):
+            rus1=i
+for i in files:
+    for j in sas:
+        if re.search(j,i):
+            sas1=i
+
+for i in files1:
+    for j in sas:
+        if re.search(j,i):
+            sas1=i  
+for i in files2:
+    for j in sas:
+        if re.search(j,i):
+            sas1=i
+for i in files3:
+    for j in sas:
+        if re.search(j,i):
+            sas1=i
+for i in files:
+    for j in sys:
+        if re.search(j,i):
+            sys1=i
+
+for i in files1:
+    for j in sys:
+        if re.search(j,i):
+            sys1=i 
+for i in files2:
+    for j in sys:
+        if re.search(j,i):
+            sys1=i
+for i in files3:
+    for j in sys:
+        if re.search(j,i):
+            sys1=i
+
+for i in files:
+    for j in sho:
+        if re.search(j,i):
+            sho1=i 
+
+for i in files1:
+    for j in sho:
+        if re.search(j,i):
+            sho1=i   
+for i in files2:
+    for j in sho:
+        if re.search(j,i):
+            sho1=i 
+for i in files3:
+    for j in sho:
+        if re.search(j,i):
+            sho1=i 
+def a4l_arg_sto():
+    cursor=conn.cursor()
+    cursor.execute ("SELECT * FROM [FlatFile_Connect].[ext].[A4L_ARG_Stocks] WHERE [Reporting Date]='2022-07-31'")
+    mylist=[]
+    for r in cursor:
+        mylist.append(r)
+    c=0
+    for i in mylist:
+            c += 1
+    l=[]
+    if arg1!='':
+        book=load_workbook(arg1)
+        df = pd.read_excel(book,engine='openpyxl',dtype=object,header=0)
+        l = df.values.tolist()
+    cc=0
+    for i in l:
+            cc += 1
+    if c==cc:
+        test_var=colored('PASSED','green')
+    else:
+        test_var=colored('FAILED','red')
+    
+    data = [["A4LARG",c,cc,test_var]]
+    for i in data:
+        table_list.append(i)
+    
+
+def a4l_bra_sto():
+    cursor=conn.cursor()
+    cursor.execute ("SELECT* FROM [FlatFile_Connect].[ext].[A4L_BRA_Stocks]  WHERE [Reporting Date]='2022-07-31'" )
+    mylist=[]
+    for r in cursor:
+        mylist.append(r)
+    c=0
+    for i in mylist:
+            c += 1
+    l=[]
+    if bra1!='':
+        book=load_workbook(bra1)
+        df = pd.read_excel(book,engine='openpyxl',dtype=object,header=0)
+        l = df.values.tolist()
+    cc=0
+    for i in l:
+            cc += 1
+    if c==cc:
+        test_var=colored('PASSED','green')
+    else:
+        test_var=colored('FAILED','red')
+    
+    data = [["A4LBRA",c,cc,test_var]]
+    for i in data:
+        table_list.append(i)
+
+def a4l_ch_sto():
+    cursor=conn.cursor()
+    cursor.execute ("SELECT *FROM [FlatFile_Connect].[ext].[A4L_CH_Stocks_July]" )
+    mylist=[]
+    for r in cursor:
+        mylist.append(r)
+    c=0
+    for i in mylist:
+            c += 1
+    l=[]
+    if ch1!='':
+        book=load_workbook(ch1)
+        df = pd.read_excel(book,engine='openpyxl',dtype=object,header=0)
+        l = df.values.tolist()
+    cc=0
+    for i in l:
+            cc += 1
+    if c==cc:
+        test_var=colored('PASSED','green')
+    else:
+        test_var=colored('FAILED','red')
+    
+    data = [["A4LCH",c,cc,test_var]]
+    for i in data:
+        table_list.append(i)
+
+def a4l_cn_sto():
+    cursor=conn.cursor()
+    cursor.execute ("SELECT * FROM [FlatFile_Connect].[ext].[A4L_CN_Stocks] where [Reporting Date]='2022-07-31' " )
+    mylist=[]
+    for r in cursor:
+        mylist.append(r)
+    c=0
+    for i in mylist:
+            c += 1
+    l=[]
+    if cn1!='':
+        book=load_workbook(cn1)
+        df = pd.read_excel(book,engine='openpyxl',dtype=object,header=0)
+        l = df.values.tolist()
+    cc=0
+    for i in l:
+            cc += 1
+    if c==cc:
+        test_var=colored('PASSED','green')
+    else:
+        test_var=colored('FAILED','red')
+    
+    data = [["A4LCN",c,cc,test_var]]
+    for i in data:
+        table_list.append(i)
+
+def a4l_erf_sto():
+    cursor=conn.cursor()
+    cursor.execute ("SELECT [Periode] FROM [FlatFile_Connect].[ext].[A4L_ERF_Stocks_2] where Periode=2022007 " )
+    mylist=[]
+    for r in cursor:
+        mylist.append(r)
+    c=0
+    for i in mylist:
+            c += 1
+    l=[]
+    if erf1!='':
+        book=load_workbook(erf1)
+        df = pd.read_excel(book,engine='openpyxl',dtype=object,header=0)
+        l = df.values.tolist()
+    cc=0
+    for i in l:
+            cc += 1
+    if c==cc:
+        test_var=colored('PASSED','green')
+    else:
+        test_var=colored('FAILED','red')
+    
+    data = [["A4LERF",c,cc,test_var]]
+    for i in data:
+        table_list.append(i)
+
+def a4l_fop_sto():
+    cursor=conn.cursor()
+    cursor.execute ("SELECT * FROM [FlatFile_Connect].[ext].[A4L_FOP_Stocks] where [Reporting Date]='2022-07-31'" )
+    mylist=[]
+    for r in cursor:
+        mylist.append(r)
+    c=0
+    for i in mylist:
+            c += 1
+    l=[]
+    if fop1!='':
+        book=load_workbook(fop1)
+        df = pd.read_excel(book,engine='openpyxl',dtype=object,header=0)
+        l = df.values.tolist()
+    cc=0
+    for i in l:
+            cc += 1
+    if c==cc:
+        test_var=colored('PASSED','green')
+    else:
+        test_var=colored('FAILED','red')
+    
+    data = [["A4LFOP",c,cc,test_var]]
+    for i in data:
+        table_list.append(i)
+
+def a4l_fra_sto():
+    cursor=conn.cursor()
+    cursor.execute ("SELECT * FROM [FlatFile_Connect].[ext].[A4L_FRA_Stocks] where Period=2022007 " )
+    mylist=[]
+    for r in cursor:
+        mylist.append(r)
+    c=0
+    for i in mylist:
+            c += 1
+    l=[]
+    if fra1!='':
+        book=load_workbook(fra1)
+        df = pd.read_excel(book,engine='openpyxl',dtype=object,header=0)
+        l = df.values.tolist()
+    cc=0
+    for i in l:
+            cc += 1
+    if c==cc:
+        test_var=colored('PASSED','green')
+    else:
+        test_var=colored('FAILED','red')
+    
+    data = [["A4LFRA",c,cc,test_var]]
+    for i in data:
+        table_list.append(i)
+
+def a4l_ham_sto():
+    cursor=conn.cursor()
+    cursor.execute ("SELECT * FROM [FlatFile_Connect].[ext].[A4L_HAM_Stocks] where [Reporting Date]='2022-07-31' " )
+    mylist=[]
+    for r in cursor:
+        mylist.append(r)
+    c=0
+    for i in mylist:
+            c += 1
+    l=[]
+    if ham1!='':
+        book=load_workbook(ham1)
+        df = pd.read_excel(book,engine='openpyxl',dtype=object,header=0)
+        l = df.values.tolist()
+    cc=0
+    for i in l:
+            cc += 1
+    if c==cc:
+        test_var=colored('PASSED','green')
+    else:
+        test_var=colored('FAILED','red')
+    
+    data = [["A4LHAM",c,cc,test_var]]
+    for i in data:
+        table_list.append(i)
+
+def a4l_kas_sto():
+    cursor=conn.cursor()
+    cursor.execute ("SELECT * FROM [FlatFile_Connect].[ext].[A4L_KAS_Stocks] where CONVERT(DATE, [Archivdatum]) between '2022-07-31 23:00:00.000' and '2022-07-31 23:00:00.000' " )
+    mylist=[]
+    for r in cursor:
+        mylist.append(r)
+    c=0
+    for i in mylist:
+            c += 1
+    l=[]
+    if kas1!='':
+        book=load_workbook(kas1)
+        df = pd.read_excel(book,engine='openpyxl',dtype=object,header=0)
+        l = df.values.tolist()
+    cc=0
+    for i in l:
+            cc += 1
+    if c==cc:
+        test_var=colored('PASSED','green')
+    else:
+        test_var=colored('FAILED','red')
+    
+    data = [["A4LKAS",c,cc,test_var]]
+    for i in data:
+        table_list.append(i)
+
+def a4l_mex_sto():
+    cursor=conn.cursor()
+    cursor.execute ("SELECT * FROM [FlatFile_Connect].[ext].[A4L_MEX_Stocks] where [Reporting Date]='2022-07-31'" )
+    mylist=[]
+    for r in cursor:
+        mylist.append(r)
+    c=0
+    for i in mylist:
+            c += 1
+    l=[]
+    if mex1!='':
+        book=load_workbook(mex1)
+        df = pd.read_excel(book,engine='openpyxl',dtype=object,header=0)
+        l = df.values.tolist()
+    cc=0
+    for i in l:
+            cc += 1
+    if c==cc:
+        test_var=colored('PASSED','green')
+    else:
+        test_var=colored('FAILED','red')
+    
+    data = [["A4LMEX",c,cc,test_var]]
+    for i in data:
+        table_list.append(i)
+def a4l_rit_sto():
+    cursor=conn.cursor()
+    cursor.execute ("SELECT* FROM [FlatFile_Connect].[ext].[A4L_RIT_Stocks] where [Reporting Date]='2022-07-31' " )
+    mylist=[]
+    for r in cursor:
+        mylist.append(r)
+    c=0
+    for i in mylist:
+            c += 1
+    l=[]
+    if rit1!='':
+        book=load_workbook(rit1)
+        df = pd.read_excel(book,engine='openpyxl',dtype=object,header=0)
+        l = df.values.tolist()
+    cc=0
+    for i in l:
+            cc += 1
+    if c==cc:
+        test_var=colored('PASSED','green')
+    else:
+        test_var=colored('FAILED','red')
+    
+    data = [["A4LRIT",c,cc,test_var]]
+    for i in data:
+        table_list.append(i)
+def a4l_rom_sto():
+    cursor=conn.cursor()
+    cursor.execute ("SELECT * FROM [FlatFile_Connect].[ext].[A4L_RO_Stocks_april] where Period=2022007" )
+    mylist=[]
+    for r in cursor:
+        mylist.append(r)
+    c=0
+    for i in mylist:
+            c += 1
+    l=[]
+    if rom1!='':
+        book=load_workbook(rom1)
+        df = pd.read_excel(book,engine='openpyxl',dtype=object,header=0)
+        l = df.values.tolist()
+    cc=0
+    for i in l:
+            cc += 1
+    if c==cc:
+        test_var=colored('PASSED','green')
+    else:
+        test_var=colored('FAILED','red')
+    
+    data = [["A4LROM",c,cc,test_var]]
+    for i in data:
+        table_list.append(i)
+def a4l_rus_sto():
+    cursor=conn.cursor()
+    cursor.execute ("SELECT* FROM [FlatFile_Connect].[ext].[A4L_RUS_Stocks] where [Reporting Date]='2022-07-31' " )
+    mylist=[]
+    for r in cursor:
+        mylist.append(r)
+    c=0
+    for i in mylist:
+            c += 1
+    l=[]
+    if rus1!='':
+        book=load_workbook(rus1)
+        df = pd.read_excel(book,engine='openpyxl',dtype=object,header=0)
+        l = df.values.tolist()
+    cc=0
+    for i in l:
+            cc += 1
+    if c==cc:
+        test_var=colored('PASSED','green')
+    else:
+        test_var=colored('FAILED','red')
+    
+    data = [["A4LRUS",c,cc,test_var]]
+    for i in data:
+        table_list.append(i)
+def a4l_sas_sto():
+    cursor=conn.cursor()
+    cursor.execute ("SELECT * FROM [FlatFile_Connect].[ext].[A4L_SAS_Stocks_June] WHERE [Reporting date]='2022-07-31 00:00:00.000'" )
+    mylist=[]
+    for r in cursor:
+        mylist.append(r)
+
+    c=0
+    for i in mylist:
+            c += 1
+    l=[]
+    if sas1!='':
+        book=load_workbook(sas1)
+        df = pd.read_excel(book,engine='openpyxl',dtype=object,header=0)
+        l = df.values.tolist()
+    cc=0
+    for i in l:
+            cc += 1
+    if c==cc:
+        test_var=colored('PASSED','green')
+    else:
+        test_var=colored('FAILED','red')
+    
+    data = [["A4LSAS",c,cc,test_var]]
+    for i in data:
+        table_list.append(i)
+
+def a4l_sys_sto():
+    cursor=conn.cursor()
+    cursor.execute ("SELECT* FROM [FlatFile_Connect].[ext].[A4L_SYS_Stocks] where Periode=2022007" )
+    mylist=[]
+    for r in cursor:
+        mylist.append(r)
+
+    c=0
+    for i in mylist:
+            c += 1
+    l=[]
+    if sys1!='':
+        book=load_workbook(sys1)
+        df = pd.read_excel(book,engine='openpyxl',dtype=object,header=0)
+        l = df.values.tolist()
+    cc=0
+    for i in l:
+            cc += 1
+    if c==cc:
+        test_var=colored('PASSED','green')
+    else:
+        test_var=colored('FAILED','red')
+    
+    data = [["A4LSYS",c,cc,test_var]]
+    for i in data:
+        table_list.append(i)
+
+a4l_arg_sto()
+a4l_bra_sto()
+a4l_ch_sto()
+a4l_cn_sto()
+a4l_erf_sto()
+a4l_fop_sto()
+a4l_fra_sto()
+a4l_ham_sto()
+a4l_kas_sto()
+a4l_mex_sto()
+a4l_rit_sto()
+a4l_rom_sto()
+a4l_rus_sto()
+a4l_sas_sto()
+a4l_sys_sto() 
+
+col_names = ["\033[1mENTITY\033[1m","\033[1mNUMBER OF RECORDS IN ERP DB\033[1m", "\033[1mNUMBER OF RECORDS IN SOURCE FILE\033[1m","\033[1mPASSED/FAILED\033[1m"]
+print(tabulate(table_list, headers=col_names, tablefmt="fancy_grid"))
+
